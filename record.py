@@ -3,11 +3,11 @@ import wave
 # RECORDING ON PI: https://makersportal.com/blog/2018/8/23/recording-audio-on-the-raspberry-pi-with-python-and-a-usb-microphone
 def recordWAV():
     # the following is from http://people.csail.mit.edu/hubert/pyaudio/
-    CHUNK = 1024
+    CHUNK = 4096
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 44100
-    RECORD_SECONDS = 10
+    RECORD_SECONDS = 3
     WAVE_OUTPUT_FILENAME = "output.wav"
 
     p = pyaudio.PyAudio()
@@ -16,7 +16,7 @@ def recordWAV():
                     channels=CHANNELS,
                     rate=RATE,
                     input=True,
-                    input_device_
+                    input_device_index = 2,
                     frames_per_buffer=CHUNK)
 
     print("* recording")
