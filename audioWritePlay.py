@@ -18,6 +18,7 @@ def writeWAVFile(sounds):
     for (s,t) in sounds:
         for i in range(int(t * sampleRate)):
             value = int(32767.0*math.cos(2*s*math.pi*float(i)/float(sampleRate)))
+                # take out              "2*"
             data = struct.pack('<h', value)
             wavef.writeframesraw(bytes(data))
 
@@ -54,11 +55,3 @@ def playWAVFile(pathname):
       os.remove(pathname)
     else:
       print("The file does not exist")
-
-
-def main():
-    writeWAVFile([(400,2),(600,1),(1000,5)])
-    playWAVFile("./sound.wav") #pathname is hardcoded currently
-
-if __name__ == "__main__":
-    main()
