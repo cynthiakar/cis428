@@ -5,6 +5,7 @@ from loginsystem import LoginSystem
 from security import encrypt_password
 import os
 import struct
+import getpass
 
 def generateRandomSound():
     x1 = struct.unpack('I', os.urandom(4))[0]
@@ -47,18 +48,25 @@ def loginProtocol():
     if x == "y":
         print("Choose username:")
         un = input()
-        print("Choose password:")
-        pw = encrypt_password(input())
-        while not login.createAccount(un, pw):
+        # print("Choose password:")
+        # pw = input()
+        pw = encrypt_password(getpass.getpass("Choose password:"))
+        success = login.createAccount(un, pw)
+        while not success:
             print("Username already exists. Try again.")
+            print("Choose username:")
+            un = input()
+            pw = encrypt_password(getpass.getpass("Choose password:"))
+            success = login.createAccount(un, pw)
         print("Account successfully created.")
     success = False
     print("Please log in")
     print("Enter username:")
     un = input()
     while not success:
-        print("Enter password")
-        pw = input()
+        # print("Enter password")
+        # pw = input()
+        pw = getpass.getpass("Choose password:")
         success = login.login(un, pw)
         if success is False:
             print("Try again.")
