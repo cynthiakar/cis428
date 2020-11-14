@@ -48,4 +48,4 @@ def compareWav(filename):
 
     return averageFrequencies
 
-compareWav("sound.wav")
+# compareWav("sound.wav")

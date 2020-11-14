@@ -7,7 +7,7 @@ class LoginSystem:
 		self.usersDB = {}
 		with open('usersDB.json') as f:
 			self.usersDB = json.load(f)
-		print(self.usersDB)
+		# print(self.usersDB)
 
 	def createAccount(self, username, password):
 		if username in list(self.usersDB.keys()):
