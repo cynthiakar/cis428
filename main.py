@@ -3,10 +3,22 @@ import compareWAV
 import aubio
 from loginsystem import LoginSystem
 from security import encrypt_password
+import os
+import struct
+
+def generateRandomSound():
+    x1 = struct.unpack('I', os.urandom(4))[0]
+    y1 = struct.unpack('I', os.urandom(4))[0]
+    z1 = struct.unpack('I', os.urandom(4))[0]
+    x2 = struct.unpack('I', os.urandom(4))[0]
+    y2 = struct.unpack('I', os.urandom(4))[0]
+    z2 = struct.unpack('I', os.urandom(4))[0]
+    return [(x1%10*100,x2%4+1), (y1%10*100,y2%4+1), (z1%10*100,z2%4+1)]
 
 def soundProtocol():
     #generate sound and save
     sounds = [(400,2),(600,1),(1000,5)]
+    # sounds = generateRandomSound()
 
     totalDuration = 0
     for (_,d)in sounds:
