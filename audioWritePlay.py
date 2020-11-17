@@ -3,14 +3,14 @@ import pyaudio #brew install portaudio
                #pip install pyaudio
 
 
-def writeWAVFile(sounds):
+def writeWAVFile(sounds,filename):
     #edited code from http://blog.acipo.com/wave-generation-in-python/
 
     sampleRate = 44100.0 # hertz
     #duration = 10.0       # seconds
     #frequency = 1000.0    # hertz
 
-    wavef = wave.open('sound.wav','w')
+    wavef = wave.open(filename,'w')
     wavef.setnchannels(1) # mono
     wavef.setsampwidth(2)
     wavef.setframerate(sampleRate)
@@ -51,7 +51,7 @@ def playWAVFile(pathname):
 
     p.terminate()
 
-    if os.path.exists(pathname):
-      os.remove(pathname)
-    else:
-      print("The file does not exist")
+    #if os.path.exists(pathname):
+    #  os.remove(pathname)
+    #else:
+    # print("The file does not exist")

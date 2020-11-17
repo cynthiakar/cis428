@@ -6,7 +6,7 @@ def compareWav(filename):
     win_s = 4096
     hop_s = 512
 
-    s = aubio.source("sound.wav", 44100, hop_s)
+    s = aubio.source(filename, 44100, hop_s)
     samplerate = s.samplerate
 
     tolerance = 0.8
@@ -46,6 +46,22 @@ def compareWav(filename):
     #print(averageFrequencies)
     #print("Average frequency = " + str(np.array(pitches).mean()) + " hz")
 
+    f.open('averageFrequencies.txt', 'a+')
+    f.write(averageFrequencies)
+
     return averageFrequencies
 
-# compareWav("sound.wav")
+if __name__ == '__main__':
+    # handling command line output filename
+    try:
+      opts, args = getopt.getopt(argv,"i:","ifile=")
+    except getopt.GetoptError:
+      print('compareWAV.py -i <inputfile>')
+      sys.exit(2)
+    for opt, arg in opts:
+      if opt in ("-i", "--ifile"):
+         filename = arg
+      else:
+         print('compareWav.py -o <inputfile>')
+         sys.exit()
+    compareWav(filename)
