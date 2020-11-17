@@ -1,9 +1,9 @@
 import pyaudio
 import wave
-import sys
+import sys, getopt
 
 # RECORDING ON PI: https://makersportal.com/blog/2018/8/23/recording-audio-on-the-raspberry-pi-with-python-and-a-usb-microphone
-def recordWAV():
+def recordWAV(argv):
     # the following is from http://people.csail.mit.edu/hubert/pyaudio/
     CHUNK = 4096
     FORMAT = pyaudio.paInt16
@@ -13,7 +13,7 @@ def recordWAV():
 
     # handling command line output filename
     try:
-      opts, args = getopt.getopt(argv,"o:","ofile="])
+      opts, args = getopt.getopt(argv,"o:",["ofile="])
     except getopt.GetoptError:
       print('record.py -o <outputfile>')
       sys.exit(2)
@@ -55,8 +55,8 @@ def recordWAV():
     wf.close()
 
 
-def main():
-    recordWAV()
+def main(argv):
+    recordWAV(argv)
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

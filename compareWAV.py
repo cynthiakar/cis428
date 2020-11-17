@@ -50,18 +50,3 @@ def compareWav(filename):
     f.write(averageFrequencies)
 
     return averageFrequencies
-
-if __name__ == '__main__':
-    # handling command line output filename
-    try:
-      opts, args = getopt.getopt(argv,"i:","ifile=")
-    except getopt.GetoptError:
-      print('compareWAV.py -i <inputfile>')
-      sys.exit(2)
-    for opt, arg in opts:
-      if opt in ("-i", "--ifile"):
-         filename = arg
-      else:
-         print('compareWav.py -o <inputfile>')
-         sys.exit()
-    compareWav(filename)
