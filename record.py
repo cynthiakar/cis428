@@ -9,17 +9,19 @@ def recordWAV(argv):
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 44100
-    RECORD_SECONDS = 10
+
 
     # handling command line output filename
     try:
-      opts, args = getopt.getopt(argv,"o:",["ofile="])
+      opts, args = getopt.getopt(argv,"o:d:",["ofile=","dur="])
     except getopt.GetoptError:
       print('record.py -o <outputfile>')
       sys.exit(2)
     for opt, arg in opts:
       if opt in ("-o", "--ofile"):
          WAVE_OUTPUT_FILENAME = arg
+      elif opt in ("-d", "--duration"):
+         RECORD_SECONDS = int(arg)
       else:
          print('record.py -o <outputfile>')
          sys.exit()
@@ -30,7 +32,7 @@ def recordWAV(argv):
                     channels=CHANNELS,
                     rate=RATE,
                     input=True,
-                    input_device_index = 2,
+                    #input_device_index = 2, #required for raspberry pi
                     frames_per_buffer=CHUNK)
 
     print("* recording to ", WAVE_OUTPUT_FILENAME)
