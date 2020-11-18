@@ -9,7 +9,7 @@ def recordWAV(argv):
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 44100
-
+    RECORD_SECONDS = 10
 
     # handling command line output filename
     try:

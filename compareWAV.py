@@ -28,7 +28,7 @@ def compareWav(filename):
         total_frames += read
         if read < hop_s: break
 
-    #print(pitches)
+    print(pitches)
     print("pitch length:", len(pitches))
     frequencies = [[pitches[0]]]
     i = 0
@@ -45,8 +45,5 @@ def compareWav(filename):
 
     #print(averageFrequencies)
     #print("Average frequency = " + str(np.array(pitches).mean()) + " hz")
-
-    f.open('averageFrequencies.txt', 'a+')
-    f.write(averageFrequencies)
 
     return averageFrequencies
