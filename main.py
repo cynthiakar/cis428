@@ -1,11 +1,14 @@
-import audioWritePlay
-import compareWAV
 import aubio
 from loginsystem import LoginSystem
 from security import encrypt_password
+from soundUtil import SoundUtil
+from soundAnalysis import SoundAnalysis
 import os
 import struct
 import getpass
+from multiprocessing import Process
+import subprocess
+import time
 
 def generateRandomSound():
     x1 = struct.unpack('I', os.urandom(4))[0]
@@ -14,32 +17,26 @@ def generateRandomSound():
     x2 = struct.unpack('I', os.urandom(4))[0]
     y2 = struct.unpack('I', os.urandom(4))[0]
     z2 = struct.unpack('I', os.urandom(4))[0]
-    return [(x1%10*100,x2%4+1), (y1%10*100,y2%4+1), (z1%10*100,z2%4+1)]
+    return [((x1%50+1)*100,x2%4+1), ((y1%50+1)*100,y2%4+1), ((z1%50+1)*100,z2%4+1)]
 
-def soundProtocol():
-    #generate sound and save
-    sounds = [(400,2),(600,1),(1000,5)]
-    # sounds = generateRandomSound()
+def soundProtocol(filename, expectedSound):
+    soundUtil = SoundUtil(filename, expectedSound)
+    soundAnalysis = SoundAnalysis(filename, expectedSound)
+    soundUtil.write()
 
-    totalDuration = 0
-    for (_,d)in sounds:
-        totalDuration += d
+    # p1 = Process(target=record,args=(i,))
+    # p2 = Process(target=play,args=(i,))
+    p1 = Process(target=soundUtil.record)
+    p2 = Process(target=soundUtil.play)
+    p1.start()
+    # time.sleep(200)
+    p2.start()
+    p2.join()
+    p1.join()
+    print("retrieving files from raspberry pi")
+    subprocess.run("scp pi@192.168.0.19:/home/pi/cis428/"+filename+" /Users/andrew/School/senior_fall/Cryptography/Audio\ Security\ Project/cis428", shell=True)
 
-    if (totalDuration != 0):
-        expectedFD = [(f, (d/totalDuration)) for (f,d) in sounds]
-
-    audioWritePlay.writeWAVFile(sounds)
-
-    #analyze sound
-    analysis = compareWAV.compareWav("sound.wav")
-
-    results = []
-    for i in range(len(expectedFD)):
-        results.append((abs(expectedFD[i][0] - analysis[i][0]),abs(expectedFD[i][1] - analysis[i][1])))
-
-    #print(expectedFD)
-    #print(analysis)
-    print(results)
+    print(soundAnalysis.testAnalyze(expectedSound,filename))
 
 def loginProtocol():
     login = LoginSystem()
@@ -72,7 +69,6 @@ def loginProtocol():
             print("Try again.")
     print("Login successful")
 
-
 if __name__ == "__main__":
-    loginProtocol()
-    # soundProtocol()
+    # loginProtocol()
+    soundProtocol("recording.wav", generateRandomSound())

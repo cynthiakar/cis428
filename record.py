@@ -35,7 +35,7 @@ def recordWAV(argv):
                     input_device_index = 2, #required for raspberry pi
                     frames_per_buffer=CHUNK)
 
-    print("* recording to ", WAVE_OUTPUT_FILENAME)
+    print("* recording to ", WAVE_OUTPUT_FILENAME, " for ", RECORD_SECONDS, " seconds")
 
     frames = []
 
