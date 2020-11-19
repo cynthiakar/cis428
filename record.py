@@ -32,7 +32,7 @@ def recordWAV(argv):
                     channels=CHANNELS,
                     rate=RATE,
                     input=True,
-                    #input_device_index = 2, #required for raspberry pi
+                    input_device_index = 2, #required for raspberry pi
                     frames_per_buffer=CHUNK)
 
     print("* recording to ", WAVE_OUTPUT_FILENAME)

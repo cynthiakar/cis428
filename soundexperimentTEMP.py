@@ -20,11 +20,12 @@ def play(i):
 
 
 def record(i):
+        totalDuration = 0
         for (_,d) in soundList[i]:
             totalDuration += d
         recordOutName = 'recorded' +str(i)+ '.wav'
         print("recording",str(i), '.wav')
-        subprocess.run("ssh pi@192.168.0.19 'cd /home/pi/cis428 && python record.py -o "+recordOutName+" -d "+totalDuration+"'", shell=True)
+        subprocess.run("ssh pi@192.168.0.19 'cd /home/pi/cis428 && python record.py -o "+recordOutName+" -d "+str(totalDuration)+"'", shell=True)
 
 #### computes expected(frequency, duration - averageRecorded(frequency, duration)
 def testAnalyze():
@@ -50,17 +51,17 @@ def testAnalyze():
 if __name__ == '__main__':
     createFiles()
 
-    #for i in range(len(soundList)):
-    #  p1 = Process(target=record,args=(i,))
-#
-    #  #sleep()
-    #  p2 = Process(target=play,args=(i,))
-    #  p1.start()
-    #  p2.start()
-    #  p2.join()
-    #  p1.join()
-    #  recordOutName = 'recorded' + str(i) + '.wav'
-    #  print("scping")
-     # subprocess.run("scp pi@192.168.0.19:/home/pi/cis428/"+recordOutName+" /Users/andrew/School/senior_fall/Cryptography/Audio\ Security\ Project/cis428", shell=True)
+    for i in range(len(soundList)):
+      p1 = Process(target=record,args=(i,))
+
+      #sleep()
+      p2 = Process(target=play,args=(i,))
+      p1.start()
+      p2.start()
+      p2.join()
+      p1.join()
+      recordOutName = 'recorded' + str(i) + '.wav'
+      print("scping")
+      subprocess.run("scp pi@192.168.0.19:/home/pi/cis428/"+recordOutName+" /Users/andrew/School/senior_fall/Cryptography/Audio\ Security\ Project/cis428", shell=True)
 
     testAnalyze()
