@@ -21,6 +21,7 @@ client.connect((SERVER_IP, 8080))
 client.send(b'I am CLIENT<br>')
 pickled_size = client.recv(28)
 size = pickle.loads(pickled_size)
+print(size)
 client.send(b'Recieved Size<br>')
 
 pickled_rawPitchList = client.recv(size)
