@@ -5,7 +5,7 @@ import getpass
 from loginsystem import LoginSystem
 from security import encrypt_password
 import sys
-import pickle
+import json
 
 # MAC LAPTOP
 
@@ -41,8 +41,9 @@ while True:
         from_client += str(data)
         print(from_client)
         # conn.send(b''.join(pitchList))
-        conn.send(pickle.dumps(sys.getsizeof(pitchList)))
-        # conn.send(pickle.dumps(pitchList))
+        conn.send(json.dumps(sys.getsizeof(pitchList)).encode())
+        conn.sendall(json.dumps(str(pitchList)).encode())
+        # conn.sendall(apickle.dumps(pitchList))
     conn.close()
     print('client disconnected')
 
