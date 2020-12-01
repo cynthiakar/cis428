@@ -114,7 +114,7 @@ class SoundAnalysis:
         return pitches
 
     #### returns percentage of pitches within given tolerance
-    def testAnalyze(self):
+    def testAnalyze(self, rawPitchList, recordedPitchList):
         # shift one list along the other and take the maximum accuracy percentage
-
+        print('recorded', recordedPitchList)
         return None

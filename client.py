@@ -2,15 +2,11 @@ import socket
 import json
 from multiprocessing.connection import Listener
 from ast import literal_eval
+from soundUtil import SoundUtil
+from record import recordWAV
 #RASPBERRY PI
 
 # connect to socket and listen for rawWAV pitchList
-# record sound
-# decrypt package
-# compareWAV2 for pitchList
-# testAnalyze2 for pitch list comparison
-# send encrypted verification back to server
-
 CLIENT_IP = '192.168.0.19'
 SERVER_IP = '192.168.0.5'
 
@@ -33,5 +29,18 @@ while l > 0:
 rawPitchList = json.loads(ser_rawPitchList.decode())
 client.send(b'Recieved pitchList<br>')
 client.close()
-pitchList = literal_eval(rawPitchList)
-print(pitchList)
+rawPitchList = literal_eval(rawPitchList)
+print(rawPitchList)
+
+# record sound
+soundUtil = SoundUtil()
+soundUtil.record("recording.wav")
+# decrypt package
+
+# get pitchList
+soundAnalysis = SoundAnalysis()
+recordedPitchList = soundAnalysis.getPitchList("recording.wav")
+
+# testAnalyze for pitch list comparison
+soundAnalysis.testAnalyze(rawPitchList, recordedPitchList)
+# send encrypted verification back to server
