@@ -24,8 +24,14 @@ size = pickle.loads(pickled_size)
 print(size)
 client.send(b'Recieved Size<br>')
 
-pickled_rawPitchList = client.recv(size)
+pickled_rawPitchList = b''
+l = size
+while l > 0:
+    d = sock.recv(l)
+    l -= len(d)
+    pickled_rawPitchList += d
+# pickled_rawPitchList = client.recv(size)
 rawPitchList = pickle.loads(pickled_rawPitchList)
 client.send(b'Recieved pitchList<br>')
 client.close()
-print(repr(rawPitchList))
+print(rawPitchList)
