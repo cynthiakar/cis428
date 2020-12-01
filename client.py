@@ -1,5 +1,5 @@
 import socket
-import cPickle as pickle
+import pickle
 from multiprocessing.connection import Listener
 
 #RASPBERRY PI
@@ -24,13 +24,13 @@ size = pickle.loads(pickled_size)
 print(size)
 client.send(b'Recieved Size<br>')
 
-# pickled_rawPitchList = b''
-# l = size
-# while l > 0:
-#     d = client.recv(l)
-#     l -= len(d)
-#     pickled_rawPitchList += d
-pickled_rawPitchList = client.recv(size)
+pickled_rawPitchList = b''
+l = size
+while l > 0:
+    d = client.recv(l)
+    l -= len(d)
+    pickled_rawPitchList += d
+# pickled_rawPitchList = client.recv(size)
 rawPitchList = pickle.loads(pickled_rawPitchList)
 client.send(b'Recieved pitchList<br>')
 client.close()
