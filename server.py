@@ -20,7 +20,7 @@ soundAnalysis = SoundAnalysis()
     # create pitch list
 pitchList = soundAnalysis.getPitchList(soundUtil.soundFile)
 print(sys.getsizeof(pitchList))
-print(sys.getsizeof(sys.getsizeof(pitchList)))
+print(sys.getsizeof(str(pitchList)))
 print(len(pitchList))
     # encrypt
 
@@ -34,16 +34,25 @@ serv.bind((SERVER_IP, 8080))
 serv.listen(5)
 while True:
     conn, addr = serv.accept()
-    from_client = ''
-    while True:
-        data = conn.recv(4096)
-        if not data: break
-        from_client += str(data)
-        print(from_client)
-        # conn.send(b''.join(pitchList))
-        conn.send(json.dumps(sys.getsizeof(pitchList)).encode())
-        conn.sendall(json.dumps(str(pitchList)).encode())
-        # conn.sendall(apickle.dumps(pitchList))
+    # receive "I am CLIENT"
+    data = conn.recv(4096)
+    print(data)
+
+    # send array length
+    conn.send(json.dumps(sys.getsizeof(str(pitchList))).encode())
+
+    # receive confirmation
+    data = conn.recv(4096)
+    print(data)
+
+    # send pitchList
+    conn.send(json.dumps(str(pitchList)).encode())
+
+    # receive confirmation
+    data = conn.recv(4096)
+    print(data)
+
+    # close connection
     conn.close()
     print('client disconnected')
 

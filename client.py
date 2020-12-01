@@ -19,14 +19,13 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # client.connect(('0.0.0.0', 8080)) #localhost
 client.connect((SERVER_IP, 8080))
 client.send(b'I am CLIENT<br>')
-ser_size = client.recv(28)
-print(ser_size)
+ser_size = client.recv(4)
 size = json.loads(ser_size.decode())
 print(size)
 client.send(b'Recieved Size<br>')
 
 ser_rawPitchList = b''
-l = size
+l = size-47
 while l > 0:
     d = client.recv(l)
     l -= len(d)
