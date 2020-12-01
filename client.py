@@ -20,7 +20,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect((SERVER_IP, 8080))
 client.send(b'I am CLIENT<br>')
 pickled_size = client.recv(8192)
-size = json.loads(pickled_size.decode())
+size = json.loads(pickled_size)
 print(size)
 client.send(b'Recieved Size<br>')
 
