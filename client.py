@@ -3,6 +3,7 @@ import json
 from multiprocessing.connection import Listener
 from ast import literal_eval
 from soundUtil import SoundUtil
+from soundAnalysis import SoundAnalysis
 from record import recordWAV
 #RASPBERRY PI
 

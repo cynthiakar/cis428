@@ -56,7 +56,10 @@ while True:
     conn.close()
     print('client disconnected')
 
-    # waits/listens for verification
+# play sound
+soundUtil.play()
+
+# waits/listens for verification
 
 # if verified grant access
 
