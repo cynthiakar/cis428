@@ -1,7 +1,7 @@
 import socket
 import json
 from multiprocessing.connection import Listener
-
+from ast import literal_eval
 #RASPBERRY PI
 
 # connect to socket and listen for rawWAV pitchList
@@ -13,7 +13,6 @@ from multiprocessing.connection import Listener
 
 CLIENT_IP = '192.168.0.19'
 SERVER_IP = '192.168.0.5'
-
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # client.connect(('0.0.0.0', 8080)) #localhost
@@ -34,4 +33,5 @@ while l > 0:
 rawPitchList = json.loads(ser_rawPitchList.decode())
 client.send(b'Recieved pitchList<br>')
 client.close()
-print(rawPitchList)
+pitchList = literal_eval(rawPitchList)
+print(pitchList)
