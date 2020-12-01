@@ -1,28 +1,25 @@
-import aubio
 from loginsystem import LoginSystem
 from security import encrypt_password
-from soundUtil import SoundUtil
-from soundAnalysis import SoundAnalysis
-import os
-import struct
+# from soundUtil import SoundUtil
+# from soundAnalysis import SoundAnalysis
 import getpass
 from multiprocessing import Process
 import subprocess
 # import time
 
-def generateRandomSound():
-    x1 = struct.unpack('I', os.urandom(4))[0]
-    y1 = struct.unpack('I', os.urandom(4))[0]
-    z1 = struct.unpack('I', os.urandom(4))[0]
-    x2 = struct.unpack('I', os.urandom(4))[0]
-    y2 = struct.unpack('I', os.urandom(4))[0]
-    z2 = struct.unpack('I', os.urandom(4))[0]
-    return [((x1%15+5)*100,x2%4+1), ((y1%15+5)*100,y2%4+1), ((z1%15+5)*100,z2%4+1)]
+# def generateRandomSound():
+#     x1 = struct.unpack('I', os.urandom(4))[0]
+#     y1 = struct.unpack('I', os.urandom(4))[0]
+#     z1 = struct.unpack('I', os.urandom(4))[0]
+#     x2 = struct.unpack('I', os.urandom(4))[0]
+#     y2 = struct.unpack('I', os.urandom(4))[0]
+#     z2 = struct.unpack('I', os.urandom(4))[0]
+#     return [((x1%15+5)*100,x2%4+1), ((y1%15+5)*100,y2%4+1), ((z1%15+5)*100,z2%4+1)]
 
 def soundProtocol(filename, expectedSound):
-    soundUtil = SoundUtil(filename, expectedSound)
-    soundAnalysis = SoundAnalysis(filename, expectedSound)
-    soundUtil.write()
+    soundUtil = SoundUtil(filename)
+    soundAnalysis = SoundAnalysis(rawFileName, recordedFileName)
+    soundUtil.createWAV()
 
     # p1 = Process(target=record,args=(i,))
     # p2 = Process(target=play,args=(i,))
