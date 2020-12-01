@@ -58,6 +58,7 @@ def recordWAV(argv):
 
 
 def main(argv):
+    print(argv, " arg")
     recordWAV(argv)
 
 if __name__ == "__main__":

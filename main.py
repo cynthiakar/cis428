@@ -8,7 +8,7 @@ import struct
 import getpass
 from multiprocessing import Process
 import subprocess
-import time
+# import time
 
 def generateRandomSound():
     x1 = struct.unpack('I', os.urandom(4))[0]
@@ -17,7 +17,7 @@ def generateRandomSound():
     x2 = struct.unpack('I', os.urandom(4))[0]
     y2 = struct.unpack('I', os.urandom(4))[0]
     z2 = struct.unpack('I', os.urandom(4))[0]
-    return [((x1%50+1)*100,x2%4+1), ((y1%50+1)*100,y2%4+1), ((z1%50+1)*100,z2%4+1)]
+    return [((x1%15+5)*100,x2%4+1), ((y1%15+5)*100,y2%4+1), ((z1%15+5)*100,z2%4+1)]
 
 def soundProtocol(filename, expectedSound):
     soundUtil = SoundUtil(filename, expectedSound)
@@ -29,14 +29,13 @@ def soundProtocol(filename, expectedSound):
     p1 = Process(target=soundUtil.record)
     p2 = Process(target=soundUtil.play)
     p1.start()
-    # time.sleep(200)
     p2.start()
     p2.join()
     p1.join()
     print("retrieving files from raspberry pi")
     subprocess.run("scp pi@192.168.0.19:/home/pi/cis428/"+filename+" /Users/andrew/School/senior_fall/Cryptography/Audio\ Security\ Project/cis428", shell=True)
 
-    print(soundAnalysis.testAnalyze(expectedSound,filename))
+    print(soundAnalysis.testAnalyze())
 
 def loginProtocol():
     login = LoginSystem()
@@ -70,5 +69,5 @@ def loginProtocol():
     print("Login successful")
 
 if __name__ == "__main__":
-    # loginProtocol()
+    loginProtocol()
     soundProtocol("recording.wav", generateRandomSound())
