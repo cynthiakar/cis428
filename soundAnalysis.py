@@ -100,7 +100,7 @@ class SoundAnalysis:
             results.append((abs(expectedFD[i][0] - averageFrequencies[i][0]),abs(expectedFD[i][1] - averageFrequencies[i][1])))
 
         with open("results.txt","a+") as f:
-            f.write(str(analysis) + "\n" + str(results) + "\n\n")
+            f.write(str(averageFrequencies) + "\n" + str(results) + "\n\n")
 
         return all([x<5 and y<5 for (x,y) in results])
 
