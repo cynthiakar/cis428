@@ -12,6 +12,36 @@ from Crypto.Hash import SHA256
 from Crypto.Signature import PKCS1_v1_5
 
 # MAC LAPTOP
+login = LoginSystem()
+print("Welcome to our Program. Would you like to create an account? (y/n)")
+x = input()
+if x == "y":
+    print("Choose username:")
+    un = input()
+    # print("Choose password:")
+    # pw = input()
+    pw = encrypt_password(getpass.getpass("Choose password:"))
+    success = login.createAccount(un, pw)
+    while not success:
+        print("Username already exists. Try again.")
+        print("Choose username:")
+        un = input()
+        pw = encrypt_password(getpass.getpass("Choose password:"))
+        success = login.createAccount(un, pw)
+    print("Account successfully created.")
+success = False
+print("Please log in")
+print("Enter username:")
+un = input()
+while not success:
+    # print("Enter password")
+    # pw = input()
+    pw = getpass.getpass("Choose password:")
+    success = login.login(un, pw)
+    if success is False:
+        print("Try again.")
+print("Login successful")
+
 
 # generate sound
 RECORDEDFILENAME = "recording.wav"
