@@ -38,19 +38,22 @@ while True:
     data = conn.recv(4096)
     print(data)
 
-    # send array length
-    conn.send(json.dumps(sys.getsizeof(str(pitchList))).encode())
-
-    # receive confirmation
-    data = conn.recv(4096)
-    print(data)
+    # # send array length
+    # conn.send(json.dumps(sys.getsizeof(str(soundSequence))).encode())
+    #
+    # # receive confirmation
+    # data = conn.recv(4096)
+    # print(data)
 
     # send pitchList
-    conn.send(json.dumps(str(pitchList)).encode())
+    conn.send(json.dumps(str(soundSequence)).encode())
 
     # receive confirmation
     data = conn.recv(4096)
     print(data)
+
+    if data == b'Recieved soundSequence<br>':
+        break
 
     # close connection
     conn.close()
