@@ -1,4 +1,5 @@
 from setuptools import setup
+import os
 
 setup(name='audio2fa',
       version='0.1',
@@ -14,3 +15,6 @@ setup(name='audio2fa',
       ],
       dependency_links = ['https://github.com/PortAudio/portaudio.git'],
       zip_safe=False)
+
+os.system('sudo apt-get install libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev')
+os.system('pip3 install -r audio2fa.egg-info/requires.txt')
