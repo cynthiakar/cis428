@@ -79,7 +79,7 @@ class SoundAnalysis:
         i = 0
         for p in recordedPitchList:
             average = sum(frequencies[i])/len(frequencies[i])
-            if (p < average + 20 and p > average - 20):
+            if (p < average + 50 and p > average - 50):
                 frequencies[i] += [p]
             else:
                 i = i + 1
@@ -87,6 +87,7 @@ class SoundAnalysis:
 
         frequencies = [x for x in frequencies if len(x) > 10]
         averageFrequencies = [(sum(x)/len(x),len(x)/len(recordedPitchList)) for x in frequencies]
+        averageFrequencies = [(x,y) for (x,y) in frequencies if x >= 50]
 
         print("input", expectedSound)
         print("expected", expectedFD)
@@ -102,6 +103,7 @@ class SoundAnalysis:
         with open("results.txt","a+") as f:
             f.write(str(averageFrequencies) + "\n" + str(results) + "\n\n")
 
+        print(all([x<5 and y<5 for (x,y) in results]))
         return all([x<5 and y<5 for (x,y) in results])
 
 
