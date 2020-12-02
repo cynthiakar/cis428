@@ -114,7 +114,7 @@ class SoundAnalysis:
         s = aubio.source(filename, 44100, hop_s)
         samplerate = s.samplerate
 
-        tolerance = 0.6
+        tolerance = 0.7
 
         pitch_o = aubio.pitch("yinfft", win_s, hop_s, samplerate)
         #pitch_o.set_unit("midi")
