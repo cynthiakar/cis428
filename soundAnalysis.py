@@ -69,19 +69,40 @@ class SoundAnalysis:
     #     return averageFrequencies
 
     #### computes expected(frequency, duration - averageRecorded(frequency, duration)
-    # def testAnalyze(self):
-    #     with open("results.txt","a+") as f:
-    #         f.write(self.filename + ':\n')
-    #
-    #     analysis = self.compareWav()
-    #     results = []
-    #     for i in range(min(len(self.expectedFD),len(analysis))):
-    #         results.append((abs(self.expectedFD[i][0] - analysis[i][0]),abs(self.expectedFD[i][1] - analysis[i][1])))
-    #
-    #     with open("results.txt","a+") as f:
-    #         f.write(str(analysis) + "\n" + str(results) + "\n\n")
-    #
-    #     return all([x<5 and y<5 for (x,y) in results])
+    def testAnalyze(self, expectedSound, recordedPitchList):
+        print("pitch length:", len(recordedPitchList))
+        totalDuration = sum([d for _,d in expectedSound])
+        if (totalDuration != 0):
+            expectedFD = [(f, (d/totalDuration)) for (f,d) in expectedSound]
+        frequencies = [[recordedPitchList[0]]]
+
+        i = 0
+        for p in recordedPitchList:
+            average = sum(frequencies[i])/len(frequencies[i])
+            if (p < average + 20 and p > average - 20):
+                frequencies[i] += [p]
+            else:
+                i = i + 1
+                frequencies += [[p]]
+
+        frequencies = [x for x in frequencies if len(x) > 10]
+        averageFrequencies = [(sum(x)/len(x),len(x)/len(pitches)) for x in frequencies]
+
+        print("input", expectedSound)
+        print("expected", expectedFD)
+        print("averageFrequencies", averageFrequencies)
+        #print("Average frequency = " + str(np.array(pitches).mean()) + " hz")
+        # with open("results.txt","a+") as f:
+        #     f.write(self.filename + ':\n')
+
+        results = []
+        for i in range(min(len(expectedFD),len(averageFrequencies))):
+            results.append((abs(expectedFD[i][0] - averageFrequencies[i][0]),abs(expectedFD[i][1] - averageFrequencies[i][1])))
+
+        with open("results.txt","a+") as f:
+            f.write(str(analysis) + "\n" + str(results) + "\n\n")
+
+        return all([x<5 and y<5 for (x,y) in results])
 
 
     def getPitchList(self, filename): #returns the pitch list only
@@ -113,8 +134,8 @@ class SoundAnalysis:
         print(pitches)
         return pitches
 
-    #### returns percentage of pitches within given tolerance
-    def testAnalyze(self, rawPitchList, recordedPitchList):
-        # shift one list along the other and take the maximum accuracy percentage
-        print('recorded', recordedPitchList)
-        return None
+    # #### returns percentage of pitches within given tolerance
+    # def testAnalyze(self, rawPitchList, recordedPitchList):
+    #     # shift one list along the other and take the maximum accuracy percentage
+    #     print('recorded', recordedPitchList)
+    #     return None

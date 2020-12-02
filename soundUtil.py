@@ -82,7 +82,7 @@ class SoundUtil:
         FORMAT = pyaudio.paInt16
         CHANNELS = 2
         RATE = 44100
-        RECORD_SECONDS = 10
+        RECORD_SECONDS = 8
         WAVE_OUTPUT_FILENAME = outputfile
 
         # # handling command line output filename
