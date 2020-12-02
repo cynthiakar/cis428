@@ -76,13 +76,13 @@ class SoundUtil:
 
 
     # RECORDING ON PI: https://makersportal.com/blog/2018/8/23/recording-audio-on-the-raspberry-pi-with-python-and-a-usb-microphone
-    def record(self, outputfile):
+    def record(self, outputfile, duration):
         # the following is from http://people.csail.mit.edu/hubert/pyaudio/
         CHUNK = 4096
         FORMAT = pyaudio.paInt16
         CHANNELS = 2
         RATE = 44100
-        RECORD_SECONDS = 8
+        RECORD_SECONDS = duration
         WAVE_OUTPUT_FILENAME = outputfile
 
         # # handling command line output filename

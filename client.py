@@ -34,8 +34,9 @@ soundSequence = literal_eval(soundSequence)
 print(soundSequence)
 
 # record sound
+totalDuration = sum([d for _,d in soundSequence])
 soundUtil = SoundUtil()
-soundUtil.record("recording.wav",)
+soundUtil.record("recording.wav", totalDuration)
 # decrypt package
 
 # get pitchList
