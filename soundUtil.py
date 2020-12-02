@@ -14,7 +14,11 @@ class SoundUtil:
     def generateRandomSound(self):
         x1 = struct.unpack('I', os.urandom(4))[0]
         y1 = struct.unpack('I', os.urandom(4))[0]
+        while x1%15+5 == y1%15+5:
+            y1 = struct.unpack('I', os.urandom(4))[0]
         z1 = struct.unpack('I', os.urandom(4))[0]
+        while z1%15+5 == x1%15+5 or z1%15+5 == y1%15+5:
+            z1 = struct.unpack('I', os.urandom(4))[0]
         x2 = struct.unpack('I', os.urandom(4))[0]
         y2 = struct.unpack('I', os.urandom(4))[0]
         z2 = struct.unpack('I', os.urandom(4))[0]
