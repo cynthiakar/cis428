@@ -87,7 +87,7 @@ class SoundAnalysis:
 
         frequencies = [x for x in frequencies if len(x) > 10]
         averageFrequencies = [(sum(x)/len(x),len(x)/len(recordedPitchList)) for x in frequencies]
-        averageFrequencies = [(x,y) for (x,y) in frequencies if x >= 50]
+        averageFrequencies = [(x,y) for (x,y) in averageFrequencies if x >= 50]
 
         print("input", expectedSound)
         print("expected", expectedFD)
