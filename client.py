@@ -44,7 +44,7 @@ if conf == b'YES':
 	# send hashed public key
 	client.send(hex_digest.encode())
 
-	# receive encrypted session key and public key 
+	# receive encrypted session key and public key
 	msg = client.recv(1024).decode()
 	en = eval(msg)
 
@@ -89,12 +89,12 @@ soundAnalysis = SoundAnalysis()
 recordedPitchList = soundAnalysis.getPitchList("recording.wav")
 
 # ANALYZE SOUNDS USING PITCH LIST COMPARISON
-soundAnalysis.testAnalyze(soundSequence, recordedPitchList)
+if (soundAnalysis.testAnalyze(soundSequence, recordedPitchList)):
+	response = "Access Granted"
+else:
+	response = "Access Denied!"
 
 # SEND ENCRYPTED AUTHENTICATION RESPONSE
-# response is length 14
-response = "Access Granted"
-# response = "Access Denied!"
 
 # create digital signature
 h = SHA256.new(response.encode())

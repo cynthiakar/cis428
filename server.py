@@ -120,8 +120,8 @@ while True:
     print(data)
 
     # PLAY SOUND
-    # if data == b'Recieved soundSequence':
-    #     soundUtil.play()
+    if data == b'Recieved soundSequence':
+         soundUtil.play()
 
     # RECEIVE ENCRYPTED AUTHENTICATION RESPONSE
     data = conn.recv(4096)

@@ -89,21 +89,6 @@ class SoundUtil:
         RECORD_SECONDS = duration + 2
         WAVE_OUTPUT_FILENAME = outputfile
 
-        # # handling command line output filename
-        # try:
-        #   opts, args = getopt.getopt(argv,"o:d:",["ofile=","dur="])
-        # except getopt.GetoptError:
-        #   print('record.py -o <outputfile>')
-        #   sys.exit(2)
-        # for opt, arg in opts:
-        #   if opt in ("-o", "--ofile"):
-        #      WAVE_OUTPUT_FILENAME = arg
-        #   elif opt in ("-d", "--duration"):
-        #      RECORD_SECONDS = int(arg)
-        #   else:
-        #      print('record.py -o <outputfile>')
-        #      sys.exit()
-
         p = pyaudio.PyAudio()
 
         stream = p.open(format=FORMAT,
