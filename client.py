@@ -13,13 +13,15 @@ from Crypto.Signature import PKCS1_v1_5
 #RASPBERRY PI
 
 # CONNECT TO SOCKET
+print("Connecting to server...")
 CLIENT_IP = '192.168.0.19' # raspberry pi
 SERVER_IP = '192.168.0.5' # mac laptop
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('0.0.0.0', 8080)) #localhost
-# client.connect((SERVER_IP, 8080))
+#client.connect(('0.0.0.0', 8080)) #localhost
+client.connect((SERVER_IP, 8080))
 
+print("Starting Handshake Protocol...")
 # START HANDSHAKE PROTOCOL
 # public key and private key generation
 random_generator = Random.new().read
@@ -39,7 +41,7 @@ conf = client.recv(3)
 print(conf)
 session_key = None
 if conf == b'YES':
-	print("public key received")
+	print("Public key received on server")
 	# send hashed public key
 	client.send(hex_digest.encode())
 
@@ -55,13 +57,12 @@ if conf == b'YES':
 
 	session_key = en_digest
 
-	print("\n-----ENCRYPTED PUBLIC KEY AND SESSION KEY FROM SERVER-----")
-	print(msg)
-	print("\n-----DECRYPTED SESSION KEY-----")
-	print(session_key)
-	print("\n-----HANDSHAKE COMPLETE-----\n")
+	print("\nEncrypted Session Key and Public Key: \n", msg)
+	print("\nDecrypted Session Key: \n", session_key)
+	print("\nHandshake Protocol Complete\n")
 # FINISH HANDSHAKE PROTOCOL
 
+print("Waiting for sound sequence from server")
 # RECEIVE ENCRYPTED SOUND SEQUENCE
 en_soundSequence = client.recv(1024)
 # decrypt soundSequence using session key

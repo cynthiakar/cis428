@@ -41,7 +41,6 @@ class SoundAnalysis:
         with open("results.txt","a+") as f:
             f.write(str(averageFrequencies) + "\n" + str(results) + "\n\n")
 
-        print(all([x<5 and y<5 for (x,y) in results]))
         return all([x<5 and y<5 for (x,y) in results])
 
 

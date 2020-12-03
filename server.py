@@ -40,27 +40,32 @@ while not success:
     success = login.login(un, pw)
     if success is False:
         print("Try again.")
-print("Login successful")
+print("Login successful. Authenticating through sound...")
 
 
 # generate sound
+print("Generating sound")
 RECORDEDFILENAME = "recording.wav"
 soundUtil = SoundUtil()
 soundSequence = soundUtil.generateRandomSound()
 soundUtil.createWAV(soundSequence)
 
 soundAnalysis = SoundAnalysis()
+
 # CONNECT TO SOCKET
+print("Starting server and opening socket... Run client.py on other machine")
+
 CLIENT_IP = '192.168.0.19' # raspberry pi
 SERVER_IP = '192.168.0.5' # mac laptop
 PORT = 8080
 serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serv.bind(('0.0.0.0', 8080)) # localhost
-# serv.bind((SERVER_IP, 8080))
+#serv.bind(('0.0.0.0', 8080)) # localhost
+serv.bind((SERVER_IP, 8080))
 serv.listen(5)
 while True:
     conn, addr = serv.accept()
 
+    print("Starting Handshake Protocol...")
     # START HANDSHAKE PROTOCOL
     # get publickey from client
     getpbk = conn.recv(2048)
@@ -78,7 +83,7 @@ while True:
         conn.send(b'YES')
         # receive hashed public key
         gethash = conn.recv(1024)
-        print ("\n-----HASH OF PUBLIC KEY----- \n"+gethash.decode())
+        print ("\nHash of Public Key: \n"+gethash.decode())
 
     session_key = None
     # check if hashes match
@@ -91,18 +96,19 @@ while True:
 
         # encrypt session key and public key
         E = server_public_key.encrypt(en_session_key,16)
-        print("\n-----ENCRYPTED PUBLIC KEY AND SESSION KEY-----\n"+str(E))
+        print("\nEncrypted Session Key and Public Key: \n"+str(E))
         # send encrypted session key and public key
         conn.send(str(E).encode())
-        print("\n-----HANDSHAKE COMPLETE-----")
+        print("\nHandshake Protocol Complete")
 
         # hashing session key
         en_object = SHA256.new(en_session_key)
         session_key = en_object.hexdigest()
 
-        print("\n-----SESSION KEY-----\n"+session_key)
+        print("\nSession Key: \n"+session_key)
     # FINISH HANDSHAKE PROTOCOL
 
+    print("Sending sound sequence")
     # SEND EXPECTED SOUND SEQUENCE
     # serialize soundSequence
     message = json.dumps(str(soundSequence))
@@ -138,10 +144,10 @@ while True:
     h = SHA256.new(message)
     verifier = PKCS1_v1_5.new(server_public_key)
     if verifier.verify(h, signature):
-        print("authentic")
-        print(message.decode())
+        print("Response from client: authentic")
+        print("Permission", message.decode())
     else:
-        print("not authentic")
+        print("Response from client: not authentic")
 
     # close connection
     conn.close()
