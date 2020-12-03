@@ -3,7 +3,6 @@ from multiprocessing.connection import Listener
 from ast import literal_eval
 from soundUtil import SoundUtil
 from soundAnalysis import SoundAnalysis
-from record import recordWAV
 from Crypto import Random
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES
