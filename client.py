@@ -10,12 +10,13 @@ from Crypto.Util import Counter
 from Crypto.Hash import SHA256
 from Crypto.Signature import PKCS1_v1_5
 
-#RASPBERRY PI
+
+SERVER_IP = '' # ***** PUT THE IP OF THE MACHINE PLAYING SOUND HERE ****
+
+# RASPBERRY PI
 
 # CONNECT TO SOCKET
 print("Connecting to server...")
-CLIENT_IP = '192.168.0.19' # raspberry pi
-SERVER_IP = '192.168.0.5' # mac laptop
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #client.connect(('0.0.0.0', 8080)) #localhost

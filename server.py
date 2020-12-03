@@ -11,6 +11,8 @@ from Crypto.Util import Counter
 from Crypto.Hash import SHA256
 from Crypto.Signature import PKCS1_v1_5
 
+SERVER_IP = '' # ***** PUT THE IP OF THE MACHINE PLAYING SOUND HERE ****
+
 # MAC LAPTOP
 login = LoginSystem()
 print("Welcome to our Program. Would you like to create an account? (y/n)")
@@ -55,8 +57,6 @@ soundAnalysis = SoundAnalysis()
 # CONNECT TO SOCKET
 print("Starting server and opening socket... Run client.py on other machine")
 
-CLIENT_IP = '192.168.0.19' # raspberry pi
-SERVER_IP = '192.168.0.5' # mac laptop
 PORT = 8080
 serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #serv.bind(('0.0.0.0', 8080)) # localhost
